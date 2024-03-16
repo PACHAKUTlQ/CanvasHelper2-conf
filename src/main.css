@@ -1,1 +1,15 @@
 /* Main css */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: whitesmoke;
+    z-index: 800;
+}
+
+body.show-password .login-container {
+    background: black;
+    /* set background color to black if show-password is true */
+}

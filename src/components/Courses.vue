@@ -118,6 +118,7 @@ import { Modal, message } from "ant-design-vue";
 import { InfoCircleOutlined } from "@ant-design/icons-vue";
 import { del, get, post, put } from "../tools/requests";
 import Page from "./PageSlot.vue";
+import { getAccessTokenHeaders } from "../../localStorages";
 
 interface CourseType {
   key: number;
@@ -250,7 +251,7 @@ export default defineComponent({
         maxshow: this.current_add_course.maxshow,
         order: this.current_add_course.order,
         msg: this.current_add_course.msg,
-      }, { withCredentials: true });
+      }, { headers: getAccessTokenHeaders() });
       if (res && res.status === 200) {
         message.success("Add course successfully");
         this.add_visible = false;
@@ -286,7 +287,7 @@ export default defineComponent({
         maxshow: this.current_edit_course.maxshow,
         order: this.current_edit_course.order,
         msg: this.current_edit_course.msg,
-      }, { withCredentials: true });
+      }, { headers: getAccessTokenHeaders() });
       if (response && response.status === 200) {
         message.success("Update course successfully");
       } else {
@@ -301,7 +302,7 @@ export default defineComponent({
     async refresh() {
       // Get courses
       this.loading_course_table = true;
-      const response = await get("/courses", { withCredentials: true });
+      const response = await get("/courses", { headers: getAccessTokenHeaders() });
       if (response && response.status === 200) {
         const data = response.data;
         this.data = data.map((item: any, index: number) => {
@@ -319,7 +320,7 @@ export default defineComponent({
         message.error("Failed to get course info:" + response?.data.message);
       }
 
-      const canvascourses = await get("/courses/canvas", { withCredentials: true });
+      const canvascourses = await get("/courses/canvas", { headers: getAccessTokenHeaders() });
       this.canvas_courses = [];
       if (canvascourses && canvascourses.status === 200) {
         for (const course of canvascourses.data) {
@@ -344,7 +345,7 @@ export default defineComponent({
           for (const key of this.selectedRowKeys) {
             const response = await del(
               `/courses/${this.data[key].id}/${this.data[key].type}`
-              , { withCredentials: true });
+              , { headers: getAccessTokenHeaders() });
             if (!response || response.status != 200) {
               hasError = true;
               message.error("Failed to delete course:" + response?.data.message);
@@ -370,7 +371,7 @@ export default defineComponent({
         maxshow: item.maxshow,
         order: item.order,
         msg: item.msg,
-      }, { withCredentials: true });
+      }, { headers: getAccessTokenHeaders() });
       if (response && response.status === 200) {
         message.success("Duplicate course successfully");
       } else {
@@ -380,7 +381,7 @@ export default defineComponent({
       await this.refresh();
     },
     async verify_config() {
-      const response = await get("/config/verify", { withCredentials: true });
+      const response = await get("/config/verify", { headers: getAccessTokenHeaders() });
       return response && response.status === 200;
     }
   },

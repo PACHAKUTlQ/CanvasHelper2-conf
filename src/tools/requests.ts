@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { AxiosError } from 'axios'
+import { getServerURL } from "../../localStorages";
 
-export const Base_url = localStorage.getItem("serverURL") || 'http://localhost:9283';
+export const Base_url = getServerURL();
 
 export async function get(path: string, config = {}) {
   try {

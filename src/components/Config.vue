@@ -55,7 +55,7 @@
           :options="background_file_name"></a-select>
       </a-radio-group>
       <a-upload v-model:file-list="background_filelist" list-type="picture" :action="base_url + '/file/upload'"
-        @change="onChangeFilelist">
+        :headers="headers" @change="onChangeFilelist">
         <a-button>
           <upload-outlined></upload-outlined>
           Upload File
@@ -84,6 +84,8 @@ import { del, get, Base_url, put } from "../tools/requests";
 
 import { message } from "ant-design-vue";
 import { defineComponent } from "vue";
+
+import { getAccessTokenHeaders } from "../../localStorages";
 
 interface UploadProps {
   name: string,
@@ -140,7 +142,7 @@ export default defineComponent({
       }
       if (change.file.status == 'removed') {
         // Remove file
-        const res = await del(`/file?name=${change.file.name}`, { withCredentials: true });
+        const res = await del(`/file?name=${change.file.name}`, { headers: getAccessTokenHeaders() });
         if (res && res.status == 200) {
           message.success('Remove success');
         } else {
@@ -158,7 +160,7 @@ export default defineComponent({
       message.success('Deleted user data');
     },
     async remove_attribute(key: string) {
-      const res = await del(`/config/key/${key}`, { withCredentials: true });
+      const res = await del(`/config/key/${key}`, { headers: getAccessTokenHeaders() });
       return res && res.status == 200;
     },
     async set_attribute(key: string, value: number | string) {
@@ -170,7 +172,7 @@ export default defineComponent({
       if (typeof value === 'string') {
         value = '"' + value + '"';
       }
-      const res = await put(`/config/key/${key}`, value, { withCredentials: true });
+      const res = await put(`/config/key/${key}`, value, { headers: getAccessTokenHeaders() });
       if (!res || res.status != 200) {
         message.error('Failed to set attribute: ' + key);
         this.has_err = true;
@@ -178,7 +180,7 @@ export default defineComponent({
     },
     async reload_files() {
       this.background_filelist = [];
-      const all_files = await get('/file', { withCredentials: true });
+      const all_files = await get('/file', { headers: getAccessTokenHeaders() });
       if (all_files && all_files.status === 200) {
         for (const filename of all_files.data["files"]) {
           this.background_filelist.push({
@@ -192,7 +194,7 @@ export default defineComponent({
     },
     async reload() {
       // Reload configuration
-      const res = await get('/config', { withCredentials: true });
+      const res = await get('/config', { headers: getAccessTokenHeaders() });
       if (res && res.status === 200) {
         // Got configuration
         const conf = res.data;
@@ -220,7 +222,7 @@ export default defineComponent({
     async verify() {
       // Verify the configuration
       this.verify_loading = true;
-      const res = await get('/config/verify', { withCredentials: true });
+      const res = await get('/config/verify', { headers: getAccessTokenHeaders() });
       if (res && res.status === 200) {
         message.success('Configuration verified');
       } else {
@@ -231,7 +233,7 @@ export default defineComponent({
     async force_reload() {
       // Force Reload
       this.reload_loading = true;
-      const res = await get('/config/refresh', { withCredentials: true });
+      const res = await get('/config/refresh', { headers: getAccessTokenHeaders() });
       if (res && res.status === 200) {
         message.success('Configuration reloaded');
       } else {
@@ -271,6 +273,9 @@ export default defineComponent({
     }
   },
   computed: {
+    headers() {
+      return getAccessTokenHeaders();
+    },
     background_file_name() {
       // console.log(this.background_filelist)
       let res = [];
