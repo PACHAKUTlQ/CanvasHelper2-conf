@@ -3,7 +3,7 @@ export function getServerURL() {
     // If no server URL in local storage, prompt the user to enter it
     // var serverURL = localStorage.getItem("serverURL");
 
-    var defaultURL = "https://api.4-2.site/";
+    var defaultURL = "https://api.4-2.site";
 
     // if (!serverURL) {
     //     serverURL = window.prompt("Please enter the server URL:", defaultURL);
