@@ -20,9 +20,9 @@
     </a-layout-footer>
   </a-layout>
 </template>
-  
+
 <script lang="ts">
-import {Base_url} from "../tools/requests";
+import { Base_url } from "../tools/requests";
 import { defineComponent } from "vue";
 export default defineComponent({
   data() {
@@ -49,7 +49,7 @@ export default defineComponent({
   }
 })
 </script>
-  
+
 <style>
 #components-layout-demo-fixed .logo {
   width: 120px;
