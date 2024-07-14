@@ -46,9 +46,9 @@
 
         <div>Type</div>
         <a-radio-group v-model:value="current_edit_course.type" style="margin-bottom: 10px">
-          <a-radio-button value="ass">Assignment</a-radio-button>
-          <a-radio-button value="ann">Announcement</a-radio-button>
-          <a-radio-button value="dis">Discussion</a-radio-button>
+          <a-radio-button value="0">Assignment</a-radio-button>
+          <a-radio-button value="1">Announcement</a-radio-button>
+          <a-radio-button value="2">Discussion</a-radio-button>
         </a-radio-group>
         <div>
           Max Show Number (-1 means no limit)
@@ -87,9 +87,9 @@
 
         <div>Type</div>
         <a-radio-group v-model:value="current_add_course.type" style="margin-bottom: 10px">
-          <a-radio-button value="ass">Assignment</a-radio-button>
-          <a-radio-button value="ann">Announcement</a-radio-button>
-          <a-radio-button value="dis">Discussion</a-radio-button>
+          <a-radio-button value="0">Assignment</a-radio-button>
+          <a-radio-button value="1">Announcement</a-radio-button>
+          <a-radio-button value="2">Discussion</a-radio-button>
         </a-radio-group>
         <div>
           Max Show Number (-1 means no limit)
@@ -124,7 +124,7 @@ interface CourseType {
   key: number;
   name: string;
   id: number;
-  type: string;
+  type: number;
   maxshow: number;
   order: string;
   msg: string;
@@ -196,7 +196,7 @@ export default defineComponent({
           key: 0,
           name: "",
           id: 0,
-          type: "ann",
+          type: 1,
           maxshow: -1,
           order: "normal",
           msg: "",
@@ -207,7 +207,7 @@ export default defineComponent({
           key: 0,
           name: "",
           id: 0,
-          type: "ann",
+          type: 1,
           maxshow: -1,
           order: "normal",
           msg: "",
@@ -235,7 +235,7 @@ export default defineComponent({
         key: newkey,
         name: "",
         id: 0,
-        type: "ann",
+        type: 1,
         maxshow: -1,
         order: "normal",
         msg: "",
@@ -260,7 +260,7 @@ export default defineComponent({
           key: 0,
           name: "",
           id: 0,
-          type: "ann",
+          type: 1,
           maxshow: -1,
           order: "normal",
           msg: "",
