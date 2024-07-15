@@ -154,7 +154,7 @@ export default defineComponent({
     async remove_userdata() {
       // Remove position & checks
       this.remove_userdata_loading = true;
-      await this.remove_attribute('position');
+      // await this.remove_attribute('position');
       await this.remove_attribute('checks');
       this.remove_userdata_loading = false;
       message.success('Deleted user data');
